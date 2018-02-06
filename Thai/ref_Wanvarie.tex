@@ -1,0 +1,175 @@
+\documentclass[a4paper,12pt]{article}
+
+% Set the locale for linebreak to Thai
+\XeTeXlinebreaklocale "th"
+% In English, when TeX tries to justify text,
+% it will add some spaces between words
+% For Thai, we "must not" add any space between words
+% i.e. put "zero" space between words
+\XeTeXlinebreakskip = 0pt plus 0pt
+% For a bit better(?) justified output
+\sloppy
+
+% For any unicode characters, require XeTeX/XeLaTeX
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+
+% Set main fonts
+% For Thai, I recommend to scale the size to the uppercase size of latin alphabet
+%\setmainfont[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
+\setmainfont{TeX Gyre Termes}				% Free Times
+
+% Sans font
+\setsansfont{TeX Gyre Heros}				% Free Helvetica
+
+% Monospace font
+\setmonofont{TeX Gyre Cursor}				% Free Courier
+
+% Because latin font in Sarabun is Sans Serif, we prefer to use Serif font
+\newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
+
+% Set environment for Thai fonts
+\newenvironment{thailang}
+{\thaifont}
+{}
+
+% For automatic switching between languages
+\usepackage[Latin,Thai]{ucharclasses}
+
+% When using Thai characters use thailang environment
+\setTransitionTo{Thai}{\begin{thailang}}
+% For other characters, switch back to the original environment
+\setTransitionFrom{Thai}{\end{thailang}}
+
+% Single spacing is too tight for Thai
+\usepackage{setspace}
+\onehalfspacing
+
+% For thaialph numbering \thAlph
+\usepackage{polyglossia}
+% Set the normal language to English
+% i.e. numbering, latin characters will use English font
+\setdefaultlanguage{english}
+% When using Thai characters, the font will be automatically changed to Thai font
+\setotherlanguage{thai}
+
+\AtBeginDocument\captionsthai               % Force the caption to Thai
+
+% More references in gloss-thai of polyglossia package
+% http://texdoc.net/texmf-dist/tex/latex/polyglossia/gloss-thai.ldf
+% \thaiAlpha works well, the sequence is ก ข "ฃ" ค "ฅ" ฆ ง จ ...
+% Normally, we need ก ข ค ง จ which is defined in \thaialph
+% I'm not sure why it doesn't work. So, I just re-define it.
+\def\thaialph#1{\expandafter\thalph\csname c@#1\endcsname}
+\def\thalph#1{%
+    \ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\or ช\or ซ\or
+    ฌ\or ญ\or ฎ\or ฏ\or ฐ\or ฑ\or ฒ\or ณ\or ด\or ต\or ถ\or ท\or ธ\or น\or
+    บ\or ป\or ผ\or ฝ\or พ\or ฟ\or ภ\or ม\or ย\or ร\or ฤ\or ล\or ฦ\or ว\or
+    ศ\or ษ\or ส\or ห\or ฬ\or อ\else ฮ\else\xpg@ill@value{#1}{thalph}\fi}
+
+% Again, re-define the sequence of Thai number.
+\def\thainum#1{\expandafter\thainumber\csname c@#1\endcsname}
+\def\thainumber#1{%
+    \thaidigits{\number#1}%
+}
+\def\thaidigits#1{\expandafter\thdigits #1@ }
+\def\thdigits#1{%
+    \ifx @#1% then terminate
+    \else
+    \ifx0#1๐\else\ifx1#1๑\else\ifx2#1๒\else\ifx3#1๓\else\ifx4#1๔\else\ifx5#1๕\else\ifx6#1๖\else\ifx7#1๗\else\ifx8#1๘\else\ifx9#1๙\else#1\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+    \expandafter\thdigits
+    \fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\usepackage{listings}
+\lstset{
+    language=TeX,
+    basicstyle=\ttfamily,
+    numbers=left,
+    numberstyle=\small,
+    breaklines=true,
+    xleftmargin=.1\linewidth,
+    frame=single,
+    columns=fullflexible,
+    captionpos=b,
+    showstringspaces=false,
+}
+
+
+\renewcommand{\thesection}{\thainum{section}}
+\title{คำแนะนำการตั้งค่า \LaTeX~สำหรับใช้ภาษาไทย}
+\author{ฑิตยา หวานวารี}
+\begin{document}
+    \maketitle
+
+    เราจะเรียงพิมพ์ด้วย Xe\TeX~ หรือ Xe\LaTeX~ เนื่องจากทั้งสองโปรแกรมนี้รองรับ Unicode ทำให้สามารถใช้ภาษาไทยปนกับภาษาอังกฤษได้สะดวก โปรแกรมทั้งสองนี้จะเรียงพิมพ์แล้วได้ผลลัพธ์ออกมาเป็น pdf เหมือนกับ pdf\TeX~ และ pdf\LaTeX~ แต่ยังคงสามารถแทรกรูปภาพประกอบเป็น pdf eps ได้ตามปกติ
+
+\section{Package ที่จำเป็น}
+\renewcommand{\theenumi}{\thaialph{enumi}}
+\begin{enumerate}
+    \item fontspec
+    \item polyglossia
+    \item ucharclass
+\end{enumerate}
+
+\section{การตั้งค่า}
+ใส่คำสั่งต่อไปนี้ลงใน preamble
+\begin{lstlisting}[language=]
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 0pt
+
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{TeX Gyre Termes}				% Free Times
+\setsansfont{TeX Gyre Heros}				% Free Helvetica
+\setmonofont{TeX Gyre Cursor}				% Free Courier
+
+\newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
+\newenvironment{thailang}
+{\thaifont}
+{}
+
+\usepackage[Latin,Thai]{ucharclasses}
+\setTransitionTo{Thai}{\begin{thailang}}
+\setTransitionFrom{Thai}{\end{thailang}}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguage{thai}
+
+\AtBeginDocument\captionsthai               % Force the caption to Thai
+\end{lstlisting}
+
+บรรทัดที่ 1 และ 2 สำหรับการตัดคำภาษาไทย โดยกำหนด locale ให้ Xe\TeX~ รู้ว่าเป็นภาษาไทย
+โดยปกติแล้ว \TeX~ จะจัดหน้าแบบชิดขอบซ้ายขวา (Justified) ซึ่งในภาษาอังกฤษนั้นจะปรับด้วยการเพิ่มช่องว่างระหว่างคำให้กว้างขึ้น แต่ในภาษาไทยเราไม่มีการเว้นวรรคระหว่างคำ จึงต้องตั้งค่านี้ให้เป็น 0 เพื่อให้ \TeX~ ไปเพิ่มช่องว่างตามเคาะวรรคที่เราเคาะแทน เนื่องจากการตัดคำภาษาไทยยังไม่ดีนัก การพยายามจัดหน้าอาจจะต้องหาทางเคาะวรรคตัดข้อความยาวๆ เองบ้าง เพื่อช่วยในการจัดหน้า หรือใช้ macro \lstinline|\sloppy| เพื่อช่วยในการถ่างช่องไฟระหว่างข้อความให้กว้างขึ้น\footnote{เอกสารฉบับนี้ใช้ macro \lstinline|\\sloppy| ช่วยจัดหน้า}
+
+บรรทัดที่ 4 เป็นการเรียกใช้ package fontspec เพื่อให้เลือกใช้ font ภาษาไทยได้
+บรรทัดที่ 5 เป็นการกำหนด option ของ font ให้ map อักขระต่างๆ แบบ \TeX~ เช่นการใส่ backquote/singleqoute ``รอบข้อความ'' บรรทัดที่ 6-8 เป็นการกำหนด font หลักของเอกสาร โดยแบ่งออกเป็น 3 ประเภท คือ
+\renewcommand{\theenumi}{\arabic{enumi}}
+\begin{enumerate}
+    \item Serif กำหนดโดย \lstinline|\setmainfont| ซึ่งค่าเริ่มต้นโดยปกติจะเป็น Computer Modern แต่เพื่อให้ font เป็นไปในทางเดียวกับเอกสารที่พิมพ์ด้วย Word processor อื่นๆ ในที่นี้จึงกำหนดให้เป็น TeX Gyre Termes ซึ่งเป็น font Times ที่แจกฟรี (Times New Roman ใน Windows ไม่ฟรี และอาจไม่มีใน Linux)
+    \item Sans Serif กำหนดโดย \lstinline|\setsansfont|
+    \item Monospace เช่นพวก source code ต่างๆ กำหนดโดย \lstinline|\setmonofont|
+\end{enumerate}
+
+จริงๆ แล้วหากใช้ font เดียวกันทั้งเอกสาร สามารถตัดบรรทัดที่ 10-15 นี้ออกได้ แล้วกำหนด main font (บรรทัดที่ 6) ให้เป็น font สำหรับภาษาไทยก็เพียงพอ แต่ font ภาษาไทย โดยเฉพาะสารบัญนั้น ในภาษาอังกฤษเป็น font แบบไม่มีเชิง (Sans Serif) ซึ่งบางครั้งก็ไม่เหมาะกับการพิมพ์เอกสารแบบเป็นทางการ ในที่นี้จึงกำหนดให้ font ภาษาอังกฤษเป็น Times เพื่อให้เป็น font ที่มีเชิง (Serif) แล้วใช้ package ucharclasses ในการสลับ font อัตโนมัติแทน
+
+บรรทัดที่ 10 เป็นการกำหนดชื่อ font อ้างอิง เพื่อให้สะดวกในการสลับภาษาอัตโนมัติ การสลับภาษาอัตโนมัตินี้ใช้ package ucharclasses โดยกำหนดชุดอักขระที่จะใช้เป็น option ในที่นี้คือ Latin และ Thai ดังในบรรทัดที่ 15 ส่วนบรรทัดที่ 16 เป็นการบอกว่าเมื่อพบอักขระภาษาไทย ให้ทำคำสั่งในวงเล็บปีกกา ซึ่งคือการเริ่มต้นใช้สภาพแวดล้อม \lstinline|thailang| และบรรทัดที่ 17 คือเมื่อพบอักขระที่ไม่ใช่ภาษาไทย (นอกขอบเขต unicode ของภาษาไทย) ให้สิ้นสุดการทำงานในสภาพแวดล้อม \lstinline|thailang| โดยสภาพแวดล้อม \lstinline|thailang| นั้นประกาศไว้ในบรรทัดที่ 11-13 เป็นการกำหนดให้ใช้ font ภาษาไทย
+
+บรรทัดที่ 19-20 เพื่อบังคับระยะห่างระหว่างบรรทัดให้เป็น 1.5 เท่าของขนาดตัวอักษร (onehalfspacing) เพราะ singlespacing นั้นแคบไปสำหรับข้อความภาษาไทยซึ่งมีอักขระบนล่างมาก
+
+บรรทัดที่ 22-24 คือ package ที่เทียบเท่ากับ package babel แต่รองรับ unicode และใช้กับ fontspec ได้ จุดประสงค์ในการใส่เข้ามาคือเพื่อนับเลขไทย เรียงอักษรไทย ใช้วันที่ภาษาไทยได้ โดยปกติแล้ว แนะนำให้ใช้ภาษาอังกฤษเป็นภาษาหลัก (ดังบรรทัดที่ 20) แล้วใช้ภาษาไทยเป็นภาษารองแทน  เนื่องจากแบบอักษรของตัวเลขต่างๆ จะเป็นไปตามภาษาหลัก ซึ่งโดยมากแล้วเราใช้เลขอารบิกมากกว่าเลขไทย ในเอกสารนี้จึงแสดงวันที่เป็นภาษาอังกฤษ ส่วนเลข section และลำดับ enumerate นั้นบังคับเปลี่ยนเป็นภาษาไทยใน source code เพื่อให้เห็นว่าเราสามารถนับแบบไทยก็ได้เช่นกัน
+
+บรรทัดที่ 26 ใส่เพื่อบังคับให้ caption ของรูปภาพ ตาราง และอื่นๆ เป็นภาษาไทย เนื่องจากเมื่อตั้งภาษาอังกฤษเป็นภาษาหลัก จะทำให้ caption ต่างๆ กลายเป็นภาษาอังกฤษตามไปด้วย
+
+ย่อหน้านี้เราจะทำการทดสอบการพิมพ์สมการ ทั้งการพิมพ์สมการในแบบ display เช่น $$(x+y)^2 = x^2 + 2xy + y^2$$  และในแบบ inline เช่น $(x+y)^2 = x^2 + 2xy + y^2$ 
+
+That's all.
+
+\end{document}

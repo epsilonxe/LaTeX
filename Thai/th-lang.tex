@@ -1,0 +1,47 @@
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 0pt
+\sloppy
+
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+\newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
+
+\newenvironment{thailang}
+{\thaifont}
+{}
+
+\usepackage[Latin,Thai]{ucharclasses}
+\setTransitionTo{Thai}{\begin{thailang}}
+\setTransitionFrom{Thai}{\end{thailang}}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguage{thai}
+\AtBeginDocument\captionsthai
+
+
+\def\thaialph#1{\expandafter\thalph\csname c@#1\endcsname}
+\def\thalph#1{%
+    \ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\or ช\or ซ\or
+    ฌ\or ญ\or ฎ\or ฏ\or ฐ\or ฑ\or ฒ\or ณ\or ด\or ต\or ถ\or ท\or ธ\or น\or
+    บ\or ป\or ผ\or ฝ\or พ\or ฟ\or ภ\or ม\or ย\or ร\or ฤ\or ล\or ฦ\or ว\or
+    ศ\or ษ\or ส\or ห\or ฬ\or อ\else ฮ\else\xpg@ill@value{#1}{thalph}\fi}
+\def\thainum#1{\expandafter\thainumber\csname c@#1\endcsname}
+\def\thainumber#1{%
+    \thaidigits{\number#1}%
+}
+\def\thaidigits#1{\expandafter\thdigits #1@ }
+\def\thdigits#1{%
+    \ifx @#1% then terminate
+    \else
+    \ifx0#1๐\else\ifx1#1๑\else\ifx2#1๒\else\ifx3#1๓\else\ifx4#1๔\else\ifx5#1๕\else\ifx6#1๖\else\ifx7#1๗\else\ifx8#1๘\else\ifx9#1๙\else#1\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+    \expandafter\thdigits
+    \fi
+}
+\renewcommand{\thesection}{\thainum{section}}

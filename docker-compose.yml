@@ -1,0 +1,8 @@
+version: '3'
+services:
+  latex:
+    build: .
+    working_dir: /home
+    volumes:
+      - ./:/home
+      - ./assets/fonts:/usr/local/share/fonts
