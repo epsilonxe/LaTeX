@@ -1,2 +1,21 @@
+#----------------------------------------
 # Ignore texpad intermediate files
-.texpadtmp/
+.texpadtmp
+#----------------------------------------
+# Ignore macOS files
+.DS_Store
+#----------------------------------------
+# Ignore typeset pdf
+*.pdf
+#----------------------------------------
+# Ignore latex auto generated files
+*.aux
+*.log
+*.toc
+*.blg
+*.bbl
+*.gz
+*.nav
+*.snm
+*.vrb
+#----------------------------------------
