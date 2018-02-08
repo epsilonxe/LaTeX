@@ -1,0 +1,5 @@
+#!/bin/bash
+texengin=$1
+name=$2
+$texengin -interaction=nonstopmode -output-directory=./.tmp $name
+mv ./.tmp/*.pdf ./OutputDir

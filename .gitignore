@@ -5,21 +5,11 @@
 # Ignore macOS files
 .DS_Store
 #----------------------------------------
-# Ignore typeset pdf
-*.pdf
+# Ignore Output Directory
+OutputDir/*
+!OutputDir/.gitkeep
 #----------------------------------------
 # Ignore latex auto generated files
-*.aux
-*.log
-*.toc
-*.blg
-*.bbl
-*.gz
-*.nav
-*.snm
-*.vrb
-*.fdb_latexmk
-*.fls
-*.xdv
-*.out
+.tmp/*
+!.tmp/.gitkeep
 #----------------------------------------

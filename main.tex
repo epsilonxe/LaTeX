@@ -1,9 +1,14 @@
 \documentclass{article}
 
+\input{Dev/Math/mathpkg}
+\input{Dev/Math/mathlang.tex}
+
 \title{Document Title}
 \author{The Author}
-\date{\today}
 
 \begin{document}
 \maketitle
+\begin{equation}
+	\int_a^b\;f(x)\;\mathrm{d}x = F(b) - F(a) \quad\text{if}\quad \diff{F(x)}{x} = f(x).
+\end{equation}
 \end{document}
