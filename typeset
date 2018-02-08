@@ -2,4 +2,6 @@
 texengin=$1
 name=$2
 $texengin -interaction=nonstopmode -output-directory=./.tmp $name
-mv ./.tmp/*.pdf ./OutputDir
+$texengin -interaction=nonstopmode -output-directory=./.tmp $name
+mkdir -p ./OutputDir/$name
+mv ./.tmp/*.pdf ./OutputDir/$name
