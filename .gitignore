@@ -25,6 +25,7 @@ OutputDir/*
 *.fls
 *.xdv
 *.out
+*.synctex.gz
 *.pdf
 !rmuttlogo.pdf
 #----------------------------------------
