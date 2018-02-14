@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{lprmutt}[2017/09/30 LPF RMUTT]
+\ProvidesClass{lprmutt}[2018/02/14 LP RMUTT]
 \LoadClass[twoside]{book}
 
 \def\subjecttitlethai#1{\def\@subjecttitlethai{#1}}
@@ -30,12 +30,60 @@
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead[LE,RO]{\thepage}
 
-\RequirePackage[no-math]{fontspec} 
-\RequirePackage{xunicode}
-\RequirePackage{xltxtra}
-\defaultfontfeatures{Scale=1.0,Mapping=tex-text}
-\XeTeXlinebreaklocale "th_TH"
-\setmainfont[Scale=1.23]{TH Sarabun New} 
+%\RequirePackage[no-math]{fontspec} 
+%\RequirePackage{xunicode}
+%\RequirePackage{xltxtra}
+%\defaultfontfeatures{Scale=1.0,Mapping=tex-text}
+%\XeTeXlinebreaklocale "th_TH"
+%\setmainfont[Scale=1.23]{TH Sarabun New} 
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 0pt
+\sloppy
+
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+\newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
+
+\newenvironment{thailang}
+{\thaifont}
+{}
+
+\usepackage[Latin,Thai]{ucharclasses}
+\setTransitionTo{Thai}{\begin{thailang}}
+\setTransitionFrom{Thai}{\end{thailang}}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguage{thai}
+\AtBeginDocument\captionsthai
+
+
+\def\thaialph#1{\expandafter\thalph\csname c@#1\endcsname}
+\def\thalph#1{%
+    \ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\or ช\or ซ\or
+    ฌ\or ญ\or ฎ\or ฏ\or ฐ\or ฑ\or ฒ\or ณ\or ด\or ต\or ถ\or ท\or ธ\or น\or
+    บ\or ป\or ผ\or ฝ\or พ\or ฟ\or ภ\or ม\or ย\or ร\or ฤ\or ล\or ฦ\or ว\or
+    ศ\or ษ\or ส\or ห\or ฬ\or อ\else ฮ\else\xpg@ill@value{#1}{thalph}\fi}
+\def\thainum#1{\expandafter\thainumber\csname c@#1\endcsname}
+\def\thainumber#1{%
+    \thaidigits{\number#1}%
+}
+\def\thaidigits#1{\expandafter\thdigits #1@ }
+\def\thdigits#1{%
+    \ifx @#1% then terminate
+    \else
+    \ifx0#1๐\else\ifx1#1๑\else\ifx2#1๒\else\ifx3#1๓\else\ifx4#1๔\else\ifx5#1๕\else\ifx6#1๖\else\ifx7#1๗\else\ifx8#1๘\else\ifx9#1๙\else#1\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+    \expandafter\thdigits
+    \fi
+}
+%%%%%%%
+
 
 \RequirePackage{mathtools,amssymb}
 \RequirePackage{multirow}
@@ -57,6 +105,13 @@
 
 \setlength{\parskip}{1ex}
 \setlength{\parindent}{4ex}
+
+
+\doublehyphendemerits=10000 % No consecutive line hyphens
+\brokenpenalty=10000 % No broken words across columns/pages
+\widowpenalty=9999 % Almost no widows at bottom of page
+\clubpenalty=9999 % Almost no orphans at top of page
+\interfootnotelinepenalty=9999 % Almost never break footnotes
 
 \newcounter{lecturecounter}
 \newcounter{topiccounter}
@@ -163,7 +218,7 @@
 
 \newenvironment{proof}{\vspace{-2\parskip}\par\noindent\textbf{พิสูจน์}\hspace{4ex}}{\par\hfill\rule{0.6em}{0.6em}\par\vspace{2\parskip}}
 
-\newcommand{\thailorem}[1]{\foreach \x in {1,...,#1}{\ifthenelse{\x = 1}{เนเธอร์แลนด์อัปเดตชิลี พ่อค้ากาญจนบุรีนิวแฮมป์เชียร์สแตนเลส พินอิน วิทยานุสรณ์มาร์กอาข่า โซลาร์สหัสวรรษ เทลอาวีฟ เมนแซววิทยานุสรณ์ พอลล่ารีเฟรช ยมุนาปาฏลีบุตร แคมฟรอกแมนจูคอสตาริกา เกมส์จิว พอลล่าภูเก็ตลิมูซีนกูเกิ้ลไมเกรน อัปเดตเวิร์คสเตชั่น วชิราลงกรณ์สหรัฐขงเบ้งอัพเกรด ฮินดีเอเซอร์โครเอเชีย เวียดนามโคลัมบัสแทนซาเนีย พ่อค้าพิมพิสาร มัลติเพล็กซ์ เทรลเล่อร์อารบิกออดิทอเรียมฟูจิเจมส์ เดลไฟแทนซาเนียไทรบุรี ไฟร์วอลล์ฮิตาชิโซลาร์กัมพูชา ปิกอัพอ่อนด้อยกาญจนบุรีปาปัวนิวกินี กิฟท์ลาเต้ สุราษฎร์พะสิมแคมฟรอก ล็อตหนานไห่เกมส์เน็ตบุคพัทลุง เอเซอร์ด็อกเตอร์ จาเมกา สุครีพสุรินทร์ ซีเนอร์พรหมทัต ปทุมธานีวุฒิชัย ซูซานเชียงใหม่สแปม พิจิตรทาจิกิสถานโอดีสซีย์กันยายนจิว มัลติเพล็กซ์อาระเบีย จาการ์ตาไทยรัฐเมนูซีเนอร์คอนโซล แอนติกาปัตตานีนิวตัน}{\ifthenelse{\x = 2}{\par วอเตอร์ญี่ปุ่น คอสตาริกามอดูลวิทยายนเตลุคู สปายแวร์ทรานแซ็คชัน ซิมบับเวบั๊ก พอลล่าหนองบัวลำภูชุมพร สิงห์บุรีฮานามิทรานแซ็กชันปาปัวนิวกินี โมบายล์เวิร์คสเตชั่น นาซ่าเมลเบิร์นชิป ลำพูนคอมไพล์ คอนโดอาระเบียนครสวรรค์ ลพบุรีไอคอน กรือเซะ อะศิริราช ซีเนอร์พอลล่าบาห์เรนชิคาโก ล้านช้างเมลเบิร์น มอริเชียส สกลนครสแต็กสมุทรสาครพ่อค้า ร้อยเอ็ดฮิตเสลภูมิดีไซน์ สต็อคโคลัมบัสเนเธอร์แลนด์ อัพโหลดยาเวห์สต็อคคอมไพล์มุกดาหาร นรีแพทย์เวียดนามปราจีนบุรีไอริช เวอร์ชันพารามิเตอร์แคโรไลนาเบลเยียมวีระ ไอคอนสิงหาคม โมคคัลลานะชิคาโกมอลตา กัสสปะ ไอร์แลนด์แฟกซ์อะอุตรดิตถ์ เพชรบุรีพอร์ทโปรเจกต์เยเมน นิวแฮมป์เชียร์ฮันกึล ฝรั่งเศสอิสตันบูลคอสตาริกา เมนซีริลลิก แอนะล็อกเทเลคอมดาวน์โหลดสะเด่า ฟอร์แมตอุบาลีมาเลเซีย ทรานแซคชันโดเรมอนเชียงรายสแล็ก}{\ifthenelse{\x = 3}{\par ฟอร์ดนิวเจอร์ซีย์ เอาท์พุทโจ๋โดเวอร์ ลิงก์นิด้า เวิร์ม ฮามาสกรีนพีซสแกนดิเนเวียไซต์พลาโต ลำพูนคาสิโนบรอดแบนด์ปิกอัพ ลพบุรี อั้มพาร์เดเบียนเบลอ โดเมนเดเบียนนราดูร พินอิน ไฟลท์ กาฬสินธุ์นราธิวาสแฟล็ก คอสตาริกาโอดีสซีย์จูนโคตรบอง ลิจฉวีเทรลเล่อร์ ลุยเซียนาสแปมเอ็มโพเรียมถังซำจั๋ง เอเธนส์นิวยอร์กโอดีสซีย์ พานาโซนิกพารามิเตอร์กันยายนกันยายน กลาสเบรุตตรวจทานอิหร่านคุรุมุขี ไนจีเรียวอร์ซอแมมโบ้ไทยรัฐ บอกซ์ อ่อนด้อยชัยนาทซินโดรมเประสินธี ฮอปกินส์ทราเวลฮินดีปีนังแอโรบิค แคลิฟอร์เนีย วิภาวดีโฮเมอร์ยูนิเซฟ กราฟิกเอ็มโพเรียมบราซิเลียไต้หวันซ็อกเก็ต มหาสารคามซ็อกเก็ตโอริยาโอริยาปารีส อินเทอร์เฟซ นาซ่าโซเฟียยะลาร้อยเอ็ด อุบลราชธานีเป้ยพิษณุโลก เวอร์ชวลลอนดอนแอฟริกันนิวเจอร์ซีย์ฮันกึล อัลตรานราธิวาสชมัยมรุเชษฐ์ฮามาส เทคโนสุพรรณบุรีทราเวลอาระเบีย สวาซิแลนด์ ปีนังสติ๊กเกอร์เบนซ์มาราฐี แฟล็กเอดินบะระเทคโนพอลล่าหงสา}{\ifthenelse{\x = 4}{\par อินเทลแอ๋วเสลภูมิจูน บอดี้ ลิงก์โมบายล์โอริยาวโรรส ริงโทนครัวซองต์แนสแดค เลย ดิจิทัลเวอร์ชวลเนชันแนลชุมพร เซลติกนครศรีธรรมราชซีคอน พัฒน์พงษ์ ลูป ริงโทนเดเบียนชลบุรีโอริยาออร์แกนิก โฮเมอร์แคมปัสนครพนมโซลูชัน พลาโตเทสโก้ตื้บอั้ม โครนา ปัตตานีอัลคาเทลโยโย่แช็ตแชมเปี้ยน วาริชศาสตร์ วัจนะ เสฉวน คอนโซล สาทิตย์เซลติกพลาโต เบลารุสธัมโม อุดรธานีเประ อเมริกาแอริโซนาฟอร์ดซ็อกเก็ต บริติช มุกดาหาร แทนซาเนียโครนาสิงหาคมปะลิส เบนซ์ โฟลเดอร์บล็อกเกอร์พริตตี้จตุจักร โหลนอัลคาเทลมลยาฬัมเรนโบว์ ลพบุรี สโลวะเกียเทเลคอมอัพโหลดฟอร์มโดเมน ฟิลิปส์สาทิตย์อุชเชนีคอนโซลทัชแพด บลูเรย์เลยโปรเซสเซอร์มลยาฬัมหนองบัวลำภู ลพบุรีเทมเพลตเนปาลแอคคอร์ด คุชราตีอุบลราชธานีตรวจสอบวิทยายนเอเธนส์ พานาโซนิคอินทิเกรเตอร์เซลติกเทมเพลตเหี่ยวย่น}{\ifthenelse{\x = 5}{\par ไอคอนพาเนล ลีนุกซ์แอปพลิเคชั่นลำปาง เตลุคูกระดี๊กระด๊า ธัมโม อินเทอร์เน็ตเมนโคเปนเฮเกน สระบุรีตูนพิทยานุกูล สงขลาตราด กาญจนบุรี เอกทัศน์คาสิโน นามิเบียอิลลินอยส์ สุรยุทธ์ลอนดอนนิคอน โอริยาคอนโซลสิหิงค์ ซอร์สภูเก็ตสุมาตรา ฮอนโนลูลู เลสเต โฟล์คอ่างขาง อียิปต์สโลวะเกียล้านนา ศิลปวัฒนธรรมนิด้าลูปริงโทนบางกอก โตชิบาสโลวะเกียกรีกมาสด้าอูบุนตู กุมภาพันธ์แอ๊บแบ๊วเวิร์มเลกเชอร์ลำพูน เอ็มโพเรียมเพนซิลวาเนียปาย แอสเซมบลีแมมโบ้สวาฮิลีลูเซีย ฮิรางานะแฟล็กสุพรรณบุรีโรมาเนีย ลำปางโปลิศ เสฉวน สติ๊กเกอร์ฮามาสอุซเบกิสถานเสฉวน พิษณุโลกโดเมนสโลวะเกีย นราดูรเบงกาลี ดราม่ามาสเตอร์ปารีส ยะลาสุโขทัย วิกตอเรียมีนาคมลิมูซีนนครปฐมศกุนตลา ไนน์แช็ต มาราฐีสิหิงค์โคตรบูรณ์แซมเบียสุพรรณบุรี นราธิวาสพอร์ทมลยาฬัม เบลารุส}{}}}}}}}
+
 
 \newenvironment{exercise}{\newpage\hfill\large\textbf{แบบฝึกหัดท้ายบท}\hfill\vspace{3\parskip}\par\normalsize\begin{enumerate}
 	}{\end{enumerate}}
@@ -237,10 +292,10 @@
 \localvspace
 
 \noindent\large\textbf{อัตลักษณ์ (Identity)}\par\normalsize
-“บัณฑิตนักปฏิบัติมืออาชีพ”\localvspace
+บัณฑิตนักปฏิบัติมืออาชีพ\localvspace
 
 \noindent\large\textbf{เอกลักษณ์ (Uniqueness)}\par\normalsize
-“มหาวิทยาลัยนักปฏิบัติมืออาชีพด้านวิทยาศาสตร์เทคโนโลยีและนวัตกรรม”\localvspace
+มหาวิทยาลัยนักปฏิบัติมืออาชีพด้านวิทยาศาสตร์เทคโนโลยีและนวัตกรรม\localvspace
 }
 
 \newcommand{\printtextfac}
@@ -272,10 +327,10 @@
 \localvspace
 
 \noindent\large\textbf{อัตลักษณ์ (Identity)}\par\normalsize
-“บัณฑิตนักปฏิบัติมืออาชีพ”\localvspace
+บัณฑิตนักปฏิบัติมืออาชีพ\localvspace
 
 \noindent\large\textbf{เอกลักษณ์ (Uniqueness)}\par\normalsize
-“คณะวิทยาศาสตร์และเทคโนโลยีนักปฏิบัติมืออาชีพด้านวิทยาศาสตร์เทคโนโลยีและนวัตกรรม”\localvspace
+คณะวิทยาศาสตร์และเทคโนโลยีนักปฏิบัติมืออาชีพด้านวิทยาศาสตร์เทคโนโลยีและนวัตกรรม\localvspace
 }
 
 \newcommand{\printtextobj}
@@ -289,7 +344,7 @@
 	\item เพื่อให้ความรู้พื้นฐานอันจำเป็น (essential knowledge) แก่นักศึกษาทุกคน สำหรับการเป็นพลเมืองดี
 	\item เพื่อเพิ่มพูนความเจริญงอกงามทางสติปัญญา (Intellectual skill) อันจะช่วยให้นักศึกษาสามารถนำความรู้ไปใช้ในการแก้ปัญหาชีวิต และช่วยจรรโลงสังคมให้เจริญรุ่งเรือง
 	\item เพื่อช่วยพัฒนาลักษณะและอุปนิสัย ทัศนคติ และอุดมคติให้สมกับเป็นบัณฑิต
-	\item เพื่อเป็นส่วนประกอบในความพร้อมของการศึกษาทุกแขนงวิชาชีพ และเตรียมการให้นักศึกษามีโอกาสเรียนวิชาวิทยาศาสตร์จนถึงระดับเชี่ยวชาญเฉพาะทาง (specialization)
+	\item เพื่อเป็นส่วนประกอบในความพร้อมของการศึกษาทุกแขนงวิชาชีพ และเตรียมการให้นักศึกษาได้มีโอกาสเรียนวิชาวิทยาศาสตร์จนถึงระดับเชี่ยวชาญเฉพาะทาง (specialization)
 \end{enumerate}
 
 }
