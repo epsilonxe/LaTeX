@@ -3,7 +3,6 @@
 # The shell script for preparing a CTAN LaTeX package installer and its requirement
 # Usage   makectan <package_name>
 
-author="Ratthaprom Promkam"
 ver_num="1.0"
 ver_year=2014
 ver_month=2
