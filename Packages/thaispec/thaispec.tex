@@ -1,0 +1,245 @@
+%!TEX engine = xelatex
+%!TEX root = thaispec.tex
+%!TEX enableSynctex = yes
+%!TEX outputDirectory = OutputDir
+%!TEX spellcheck = en_US
+%!TEX encoding = UTF-8
+%!TEX enableShellEscape = yes
+
+\documentclass{article}
+
+\usepackage[thaispacing=false,thaicaption=false]{thaispec}
+\usepackage{metalogo}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+}
+%\usepackage{listings}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{minted}
+
+
+\newcommand{\pkgname}{\texttt{thaispec}}
+\newcommand{\showex}[1]{\par\vspace{0mm}\noindent{Example:}\par\noindent\texttt{#1}}
+\newcommand{\printcenter}[1]{\par\begin{center}#1\end{center}\par\noindent}
+
+\newcommand{\mopt}{%
+frame=single,
+linenos=true,
+autogobble=true,
+}
+
+%\lstdefinestyle{tex}{%
+%language=[LaTeX]{TeX},
+%basicstyle=\ttfamily\small\color{red},
+%keywordstyle=\bfseries\color{black},
+%frame=single,
+%backgroundcolor=\color{white},
+%extendedchars=true,
+%inputencoding=utf8,
+%breaklines=true,
+%postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+%showstringspaces=true,
+%}
+
+%\lstset{style=tex}
+
+\newminted{latex}{frame=single}
+
+\title{The \pkgname\ package: \\Thai language typesetting in \XeLaTeX}
+\author{Ratthaprom Promkam\\{\texttt{\small ratthaprom@me.com}}}
+\date{Version 0.2 from February 25, 2018}
+
+\begin{document}
+\maketitle
+
+This package allows you to input Thai characters directly to \LaTeX\ documents
+and choose any (system wide) Thai fonts for typesetting in \XeLaTeX.
+It also tries to appropriately justify paragraphs with no more external tools.
+
+\tableofcontents
+
+
+\section{Prerequisite}
+The package use \texttt{TH Sarabun New} font by default to typeset Thai characters
+which included in the collection of Thai national fonts
+\footnote{Thai national fonts, a.k.a. \texttt{SIPAFonts}.
+See \url{https://github.com/epsilonxe/sipafonts}}.
+At least this font must be installed to system wide in order to use this package.
+Moreover the following \LaTeX\ package are essentially required for the default option: \texttt{fontspec}, \texttt{uchar­classes}, \texttt{poly­glos­sia}, \texttt{setspace}, \texttt{date­time2}, \texttt{kvop­tions}, \texttt{after­pack­age}, \texttt{xstring}, and \texttt{xpatch}.
+
+\section{Recommendation}
+Install the collection of Thai national font said above and also \TeX\ Gyre font family
+which possibly already included with your \TeX\ distribution.
+These are basically assumed to be installed prior loading the package.
+
+\section{Package loading}
+In the preamble, add the command
+\begin{minted}[frame=single]{latex}
+\usepackage{thaispec}
+\end{minted}
+then you can input Thai characters in the document and typeset the document as usual.
+By default the package set \texttt{thaifont} to \texttt{TH Sarabun New},
+while set \texttt{mainfont}, \texttt{sansfont} and \texttt{monofont} to \TeX\ Gyre fonts.
+
+In case \TeX\ Gyre font family is not system wide installed, the package should be loaded
+with the following option:
+\begin{minted}[frame=single]{LaTeX}
+\usepackage[texgyrefont = false]{thaispec}
+\end{minted}
+This will typeset the document by setting \texttt{mainfont} to \texttt{TH Sarabun New}.
+
+The package also predefines \texttt{\textbackslash today} and \texttt{\textbackslash Today}
+for today Thai date printing in short and long formats respectively.
+
+\section{Loading options}
+This section lists additional loading options by their features as follows.
+The examples in the list are default and also initialized values for those options.
+\renewcommand{\arraystretch}{1.8}
+\begin{longtable}{l p{5.8cm}}
+\caption{Loading options in \texttt{thaispec} package.} \label{table:loading_options}\\
+\hline
+\textbf{Options}  & \textbf{Features}
+\\ \hline
+\endfirsthead
+\caption{(continued) Loading options in \texttt{thaispec} package.}\\
+\hline
+\textbf{Options}  & \textbf{Features}
+\\ \hline
+\endhead
+
+\hline
+\endfoot
+  \texttt{thainum}
+  & Uses Thai numbers for almost all number digits.
+  It is untoggled by defalut.
+  \\
+  \texttt{math}
+  & Additionally load the following packages:
+  \texttt{mathtools}, \texttt{amssymb}, \texttt{amsthm}, \texttt{mathspec} orderly.
+
+  Normally \pkgname\ package loads \texttt{fontspec}\ with \texttt{no-math}\ option.
+  If your document consists of math objects, this option is then recommended.
+  \\
+  \texttt{thaifont = <SYSTEM\_FONT\_NAME>}
+  & Choose a system font for Thai characters.
+  \showex{thaifont = TH Sarabun New}
+  \\
+  \texttt{mainfont = <SYSTEM\_FONT\_NAME>}
+  & Choose a font for \texttt{mainfont} corresponding to \texttt{fontspec} package.
+  \showex{thaifont = TeX Gyre Termes}
+  \\
+  \texttt{sansfont = <SYSTEM\_FONT\_NAME>}
+  & Choose a font for \texttt{sansfont} corresponding to \texttt{fontspec} package.
+  \showex{thaifont = TeX Gyre Heros}
+  \\
+  \texttt{monofont = <SYSTEM\_FONT\_NAME>}
+  & Choose a font for \texttt{monofont} corresponding to \texttt{fontspec} package.
+  \showex{thaifont = TeX Gyre Cursors}
+  \\
+  \texttt{thaithm = <BOOL>}
+  & After loading \texttt{amsthm} package, \texttt{thaispec} package automatically defines
+  a set of theorem-like environments with Thai heading by default.
+  The automatic defined environments includes
+  \texttt{theorem}, \texttt{lemma}, \texttt{corollary},
+  \texttt{definition}, \texttt{axiom}, \texttt{undefinedterm},
+  \texttt{example}, \texttt{remark} and \texttt{note}.
+  If you prefer to set them yourself, just set its value to \texttt{false}.
+  \showex{thaithm = true}
+  \\
+  \texttt{thmcount = <VALUE>}
+  & If the option \texttt{thaithm = true} is prefered,
+  this package set the counter independently for each automatic defined environments.
+  The value of \texttt{<VALUE>} can be one of the following:
+  \texttt{default}, \texttt{no}, \texttt{full}, \texttt{section},
+  \texttt{chapter}, \texttt{kind}, \texttt{kind-section}, and \texttt{kind-chapter}.
+  \showex{thmcount = default}
+  \\
+\end{longtable}
+
+\section{Usage Examples}
+The following example is a basic example of using \texttt{thaispec} package.
+It is loaded with the default setting for typesetting in \XeLaTeX, i.e.,
+only Thai characters are typesetted with \texttt{TH Sarabun New} font,
+other charaters are typesetted with \TeX\ Gyre fonts,
+and paragraphs are justified by \texttt{\textbackslash sloppy} macro.
+%\begin{lstlisting}[style=tex,numbers=left]
+%\documentclass{article}
+%\usepackage{thaispec}
+%\begin{document}
+%\section{Thai ภาษาไทย}
+%Thai charaters can be input directly like this ทดสอบการพิมพ์ภาษาไทยในเอกสาร \XeLaTeX\
+%\end{document}
+%\end{lstlisting}
+\begin{minted}[
+frame=single,
+linenos=true,
+autogobble=true,
+highlightlines={2}
+]{LaTeX}
+\documentclass{article}
+\usepackage{thaispec}
+\begin{document}
+\section{ภาษาไทย}
+ทดสอบการพิมพ์ภาษาไทยในเอกสาร \XeLaTeX
+\end{document}
+\end{minted}
+In order to use another Thai font face for any charaters in a math document without
+\texttt{\textbackslash sloppy} macro,
+the following example can be used to achieve the goal.
+%\begin{lstlisting}[style=tex,numbers=left]
+%\documentclass{article}
+%\usepackage[math,
+%thaifont = Tahoma,
+%texgyrefont = false,
+%sloppy = false]{thaispec}
+%\begin{document}
+%\section{Math ภาษาไทย}
+%Thai charaters can be input directly like this ทดสอบการพิมพ์ภาษาไทยในเอกสาร $ax^2+bx+c=0$
+%\end{document}
+%\end{lstlisting}
+\begin{minted}[%
+frame=single,
+linenos=true,
+autogobble=true,
+highlightlines={2-5}
+]{LaTeX}
+\documentclass{article}
+\usepackage[math,
+thaifont = Tahoma,
+texgyrefont = false,
+sloppy = false]{thaispec}
+\begin{document}
+\section{Math ภาษาไทย}
+การพิมพ์ภาษาไทยในเอกสาร $ax^2+bx+c=0$
+\end{document}
+\end{minted}
+
+
+\section{Known Issues}
+\subsection*{Incorrect Thai characters with \texttt{listing} package}
+If you typeset some codes consisting of Thai characters in \texttt{lstlisting} environment provided by \texttt{listing} package, this will possibly cause you a problem with incorrect Thai characters.
+The recommendation is choosing \texttt{minted} package instead of \texttt{listing} package.
+However you need to additionally install \texttt{pygments} python module in order to use \texttt{minted} package.
+
+\section{Credits}
+This package is motivated by a set of \LaTeX\ commands for typesetting Thai documents
+provided by Dittaya Wanvarie
+\footnote{See {\url{http://pioneer.netserv.chula.ac.th/~wdittaya/}} in \LaTeX\ section.} from Chulalongkorn University.
+
+\section{License}
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license of (at your option) any later version.
+The latest version of this license is in
+\printcenter{\url{http://www.latex-project.org/lppl.txt}}
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+
+
+\end{document}

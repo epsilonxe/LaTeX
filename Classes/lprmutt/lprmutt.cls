@@ -1,5 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{lprmutt}[2018/02/14 LP RMUTT]
+\ProvidesClass{lprmutt}[2018/02/25 LP RMUTT]
+
+
 \LoadClass[twoside]{book}
 
 \def\subjecttitlethai#1{\def\@subjecttitlethai{#1}}
@@ -22,6 +24,7 @@
 \newcounter{starttopic}
 
 \RequirePackage[a4paper,left=2.6cm,right=2.4cm,top=2.54cm,bottom=2.54cm]{geometry}
+\RequirePackage[math,thaithm=false]{thaispec}
 
 \RequirePackage{emptypage}
 \RequirePackage{fancyhdr}
@@ -30,62 +33,6 @@
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead[LE,RO]{\thepage}
 
-%\RequirePackage[no-math]{fontspec} 
-%\RequirePackage{xunicode}
-%\RequirePackage{xltxtra}
-%\defaultfontfeatures{Scale=1.0,Mapping=tex-text}
-%\XeTeXlinebreaklocale "th_TH"
-%\setmainfont[Scale=1.23]{TH Sarabun New} 
-\XeTeXlinebreaklocale "th"
-\XeTeXlinebreakskip = 0pt plus 0pt
-\sloppy
-
-\usepackage{fontspec}
-\defaultfontfeatures{Mapping=tex-text}
-\setmainfont{TeX Gyre Termes}
-\setsansfont{TeX Gyre Heros}
-\setmonofont{TeX Gyre Cursor}
-\newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{TH Sarabun New}
-
-\newenvironment{thailang}
-{\thaifont}
-{}
-
-\usepackage[Latin,Thai]{ucharclasses}
-\setTransitionTo{Thai}{\begin{thailang}}
-\setTransitionFrom{Thai}{\end{thailang}}
-
-\usepackage{setspace}
-\onehalfspacing
-
-\usepackage{polyglossia}
-\setdefaultlanguage{english}
-\setotherlanguage{thai}
-\AtBeginDocument\captionsthai
-
-
-\def\thaialph#1{\expandafter\thalph\csname c@#1\endcsname}
-\def\thalph#1{%
-    \ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\or ช\or ซ\or
-    ฌ\or ญ\or ฎ\or ฏ\or ฐ\or ฑ\or ฒ\or ณ\or ด\or ต\or ถ\or ท\or ธ\or น\or
-    บ\or ป\or ผ\or ฝ\or พ\or ฟ\or ภ\or ม\or ย\or ร\or ฤ\or ล\or ฦ\or ว\or
-    ศ\or ษ\or ส\or ห\or ฬ\or อ\else ฮ\else\xpg@ill@value{#1}{thalph}\fi}
-\def\thainum#1{\expandafter\thainumber\csname c@#1\endcsname}
-\def\thainumber#1{%
-    \thaidigits{\number#1}%
-}
-\def\thaidigits#1{\expandafter\thdigits #1@ }
-\def\thdigits#1{%
-    \ifx @#1% then terminate
-    \else
-    \ifx0#1๐\else\ifx1#1๑\else\ifx2#1๒\else\ifx3#1๓\else\ifx4#1๔\else\ifx5#1๕\else\ifx6#1๖\else\ifx7#1๗\else\ifx8#1๘\else\ifx9#1๙\else#1\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
-    \expandafter\thdigits
-    \fi
-}
-%%%%%%%
-
-
-\RequirePackage{mathtools,amssymb}
 \RequirePackage{multirow}
 \RequirePackage{pgffor}
 \RequirePackage{xifthen}
@@ -146,12 +93,12 @@
 \renewcommand{\arraystretch}{2}
 \begin{tabularx}{\textwidth}{|Y|Y|}
 \hline
-\multirow{2}{*}{\textbf{แผนการสอนสัปดาห์ที่ \thelecturecounter}} 
+\multirow{2}{*}{\textbf{แผนการสอนสัปดาห์ที่ \thelecturecounter}}
 & \textbf{รหัสวิชา \@subjectid} \\ \cline{2-2}
 & \textbf{บทเรียนที่ \foreach \x in {#3,...,#4} {\theunitclass.\x\ifthenelse{\x < #4}{,}{} } }  \\ \hline
-\textbf{ชื่อหน่วย #2 }               
+\textbf{ชื่อหน่วย #2 }
 & \textbf{เวลา \@subjectpoint\ ชั่วโมง }\\ \hline
-\end{tabularx}	
+\end{tabularx}
 \end{table}
 }
 
@@ -195,14 +142,14 @@
 \newenvironment{preview}
 {\noindent\textbf{เนื้อหา}\par\noindent\textbf{หน่วยที่ \theunitclass\ \lecturetitle}\par\normalsize
 \begin{enumerate}[label=\theunitclass.\arabic*,leftmargin=4\parindent]
-\setcounter{enumi}{\thestarttopic-1} 
+\setcounter{enumi}{\thestarttopic-1}
 }
 {\end{enumerate}}
 
 \newenvironment{objective}
 {\noindent\textbf{จุดประสงค์การสอน}\par\normalsize
 \begin{enumerate}[label=\theunitclass.\arabic*,leftmargin=*,align=left]
-\setcounter{enumi}{\thestarttopic-1}  
+\setcounter{enumi}{\thestarttopic-1}
 }
 {\end{enumerate}}
 
@@ -216,7 +163,7 @@
 \newenvironment{example}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{ตัวอย่าง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
 
 
-\newenvironment{proof}{\vspace{-2\parskip}\par\noindent\textbf{พิสูจน์}\hspace{4ex}}{\par\hfill\rule{0.6em}{0.6em}\par\vspace{2\parskip}}
+\renewenvironment{proof}{\vspace{-2\parskip}\par\noindent\textbf{พิสูจน์}\hspace{4ex}}{\par\hfill\rule{0.6em}{0.6em}\par\vspace{2\parskip}}
 
 
 
@@ -248,7 +195,7 @@
 {\end{tabular}\par}
 
 \newcommand{\itemsd}[2]{
-\stepcounter{sdcounter} 
+\stepcounter{sdcounter}
 \textbf{\thesdcounter. #1} & #2 \\}
 
 \newenvironment{organization}
@@ -285,7 +232,7 @@
 	\item จัดการศึกษาวิชาชีพระดับอุดมศึกษาบนพื้นฐานวิทยาศาสตร์เทคโนโลยีและนวัตกรรมอย่างมีคุณภาพ
 	\item สร้างงานวิจัย สิ่งประดิษฐ์นวัตกรรม และงานสร้างสรรค์ สู่การผลิตเชิงพาณิชย์และการถ่ายทอดเทคโนโลยี เพื่อเพิ่มขีดความสามารถในการแข่งขันของประเทศ
 	\item ให้บริการวิชาการที่มีแนวคิดเชิงสร้างสรรค์ เพื่อการมีอาชีพอิสระและพัฒนาอาชีพ สู่การเพิ่มศักยภาพในการแข่งขัน
-	\item ทำนุบำรุงศาสนา ศิลปะและวัฒนธรรม  และอนุรักษ์สิ่งแวดล้อม
+	\item ทำนุบำรุงศาสนา ศิลปะและวัฒนธรรม  และอนุรักษ์สิ่งแวดล้อม
 	\item จัดระบบบุคลากรจากสังคมแห่งการเปลี่ยนแปลงให้สนองต่อสิทธิประโยชน์บนพื้นฐานความสุขและความก้าวหน้า
 	\item จัดระบบบริหารจัดการเพื่อเพิ่มประสิทธิภาพและเพิ่มแนวทางการจัดหารายได้ เพื่อเอื้อต่อนโยบายหลัก
 \end{enumerate}
@@ -312,7 +259,7 @@
 มุ่งมั่นจัดการศึกษาวิชาชีพด้านวิทยาศาสตร์และเทคโนโลยีที่มีคุณภาพด้วยการพัฒนาอย่างต่อเนื่อง\localvspace
 
 \noindent\large\textbf{วิสัยทัศน์ (Vision)}\par\normalsize
-คณะวิทยาศาสตร์และเทคโนโลยี เป็นคณะที่ผลิตบัณฑิตนักปฏิบัติมืออาชีพชั้นนำ 
+คณะวิทยาศาสตร์และเทคโนโลยี เป็นคณะที่ผลิตบัณฑิตนักปฏิบัติมืออาชีพชั้นนำ
 ด้านวิทยาศาสตร์เทคโนโลยี และนวัตกรรมในระดับประเทศและก้าวสู่ระดับสากล
 \localvspace
 
@@ -321,7 +268,7 @@
 	\item จัดการศึกษาวิชาชีพระดับอุดมศึกษาบนพื้นฐานวิทยาศาสตร์ เทคโนโลยี และนวัตกรรมอย่างมีคุณภาพ
 	\item สร้างงานวิจัย สิ่งประดิษฐ์ และนวัตกรรม สู่การผลิตเชิงพาณิชย์และการถ่ายทอดเทคโนโลยี เพื่อเพิ่มขีดความสามารถในการแข่งขันของประเทศ
 	\item ให้บริการวิชาการที่มีแนวคิดเชิงสร้างสรรค์ เพื่อการมีอาชีพอิสระและพัฒนาอาชีพสู่การเพิ่มศักยภาพในการแข่งขัน
-	\item ทำนุบำรุงศาสนา ศิลปะและวัฒนธรรม  และอนุรักษ์สิ่งแวดล้อม
+	\item ทำนุบำรุงศาสนา ศิลปะและวัฒนธรรม  และอนุรักษ์สิ่งแวดล้อม
 	\item จัดระบบบุคลากรจากสังคมแห่งการเปลี่ยนแปลงให้สนองต่อสิทธิประโยชน์บนพื้นฐานความสุขและความก้าวหน้า จัดระบบบริหารจัดการเพื่อเพิ่มประสิทธิภาพ และเพิ่มแนวทางการจัดหารายได้ เพื่อเอื้อต่อนโยบายหลัก
 \end{enumerate}
 \localvspace
@@ -367,16 +314,16 @@
 \newcommand{\orglecture}[3]
 {
 \stepcounter{orglecturecounter}
-\theorglecturecounter 
+\theorglecturecounter
 &
 \textbf{หน่วยที่ \theorglecturecounter\ #1 }
 \vspace{6pt}
 \setlist[enumerate]{itemsep=4pt}
 \begin{enumerate}[label=\theorglecturecounter.\arabic*]
 #3
-\end{enumerate}                   
-&  
-#2 ชั่วโมง                        
+\end{enumerate}
+&
+#2 ชั่วโมง
 \\ \hline
 }
 
@@ -396,16 +343,16 @@
 \setcounter{intelec}{0}
 \newcommand{\intelec}[3]{
 \stepcounter{intelec}
-\theintelec 
+\theintelec
 &
 \textbf{หน่วยที่ \theintelec\ #1 }
 \vspace{6pt}
 \setlist[enumerate]{itemsep=4pt}
 \begin{enumerate}[label=\theintelec.\arabic*]
 #3
-\end{enumerate}                   
-&  
-#2 ชั่วโมง                        
+\end{enumerate}
+&
+#2 ชั่วโมง
 \\ \hline
 }
 
@@ -471,13 +418,13 @@
 \addtocline{ตารางกำหนดน้ำหนักคะแนน}
 {\centering\large\textbf{ตารางกำหนดน้ำหนักคะแนน}\vspace{3\parskip}\par\noindent}
 \normalsize
-\renewcommand{\arraystretch}{1.4} 
+\renewcommand{\arraystretch}{1.4}
 \begin{table}[ht!]
 \centering
 \begin{tabular}{|c|L{8.5cm}|C{0.8cm}|C{0.8cm}|C{0.8cm}|C{0.8cm}|}
 \hline
-\multirow{3}{*}{หน่วยการเรียน} & \multirow{3}{*}{ชื่อหน่วย} & \multirow{3}{*}{\rotatebox[origin=c]{90}{คะแนนรายหน่วย\hspace{22pt}}} & \multicolumn{3}{c|}{น้ำหนักคะแนน} \\ \cline{4-6} 
- &  &  & \multicolumn{3}{c|}{พุทธพิสัย} \\ \cline{4-6} 
+\multirow{3}{*}{หน่วยการเรียน} & \multirow{3}{*}{ชื่อหน่วย} & \multirow{3}{*}{\rotatebox[origin=c]{90}{คะแนนรายหน่วย\hspace{22pt}}} & \multicolumn{3}{c|}{น้ำหนักคะแนน} \\ \cline{4-6}
+ &  &  & \multicolumn{3}{c|}{พุทธพิสัย} \\ \cline{4-6}
  &  &  & {\rotatebox[origin=c]{90}{\hspace{8pt}ความรู้-ความจำ\hspace{8pt}}} & {\rotatebox[origin=c]{90}{ความเข้าใจ}} & {\rotatebox[origin=c]{90}{การนำไปใช้}} \\ \hline
 
 }
@@ -520,9 +467,9 @@
 \textbf{หน่วยที่ #1 #2}
 \vspace{6pt}
 \setlist[enumerate]{itemsep=4pt}
-#4                  
-&  
-#3 ชั่วโมง                        
+#4
+&
+#3 ชั่วโมง
 \\ \hline
 }
 
@@ -551,15 +498,15 @@
 \par\vspace{3cm}
 \huge{โดย}
 \par
-\huge{\printauthor}	
+\huge{\printauthor}
 \par\vspace{3cm}
-\huge{ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์}	
+\huge{ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์}
 \par
-\huge{คณะวิทยาศาสตร์และเทคโนโลยี}	
+\huge{คณะวิทยาศาสตร์และเทคโนโลยี}
 \par
-\huge{มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}	
+\huge{มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}
 \par
-\huge{2559}
+\huge{\theyearbd}
 \end{center}
 \cleardoublepage
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 texengin=$1
 name=$2
 $texengin -interaction=nonstopmode -output-directory=./.tmp $name

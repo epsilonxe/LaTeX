@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{thaispec}
+\ProvidesPackage{thaispec}[2018/02/25 version 0.2 thaispec]
 
 \RequirePackage{kvoptions}
 \RequirePackage[no-math]{fontspec}
@@ -8,7 +8,6 @@
 \RequirePackage{polyglossia}
 \RequirePackage[calc]{datetime2}
 \RequirePackage{xstring}
-\RequirePackage{fp-basic, fp-snap}
 \RequirePackage{afterpackage}
 \RequirePackage{xpatch}
 
@@ -22,8 +21,21 @@ prefix=THL@
 \DeclareStringOption[TeX Gyre Heros]{sansfont}[TeX Gyre Heros]
 \DeclareStringOption[TeX Gyre Cursor]{monofont}[TeX Gyre Cursor]
 
+
+\DeclareVoidOption{math}{%
+\RequirePackage{mathtools}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{mathspec}
+}
 \DeclareVoidOption{thainum}{\renewcommand{\thesection}{\thainum{section}}}
+
+
 \DeclareBoolOption[true]{texgyrefont}
+\DeclareBoolOption[true]{thaithm}
+\DeclareBoolOption[true]{sloppy}
+\DeclareBoolOption[true]{thaispacing}
+\DeclareBoolOption[true]{thaicaption}
 
 \DeclareStringOption[default]{thmcount}[default]
 
@@ -37,7 +49,9 @@ prefix=THL@
 % Set Thai language
 \XeTeXlinebreaklocale "th"
 \XeTeXlinebreakskip = 0pt plus 0pt
+\ifTHL@sloppy
 \sloppy
+\fi
 \defaultfontfeatures{Mapping=tex-text}
 
 
@@ -63,17 +77,20 @@ prefix=THL@
 
 \setdefaultlanguage{english}
 \setotherlanguage{thai}
+\ifTHL@thaicaption
 \AtBeginDocument\captionsthai
+\fi
 
 % In case of Beamer class
 \@ifclassloaded{beamer}
-{
-% TODO: Serif math font in beamer
-}
-{
-%% Normally set onehalf spacing
+{}
+{%
+\ifTHL@thaispacing
 \onehalfspacing
+\fi
 }
+
+
 
 
 % Define Thai alpha/number/digit for enumerated items
@@ -123,15 +140,19 @@ prefix=THL@
 {12}{ธันวาคม}
 }}
 
-\newcommand{\dtyearbd}{\FPadd{\tmpdtyearbd}{\DTMfetchyear{now}}{543}\FPclip{\rtmpdtyearbd}{\tmpdtyearbd}พ.ศ.\;\rtmpdtyearbd}
+\newcounter{yearbd}
+\setcounter{yearbd}{\DTMfetchyear{now}}
+\addtocounter{yearbd}{543}
+%\newcommand{\dtyearbd}{\FPadd{\tmpdtyearbd}{\DTMfetchyear{now}}{543}\FPclip{\rtmpdtyearbd}{\tmpdtyearbd}พ.ศ.\;\rtmpdtyearbd}
 \AtBeginDocument{
-\def\Today{\dtdow\;\DTMfetchday{now}\;\dtmonth\;\dtyearbd}
-\def\today{\DTMfetchday{now}\;\dtmonth\;\dtyearbd}
+\def\Today{\dtdow\ \DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
+\def\today{\DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
 }
 
 
 % Thai theorem environments
 
+\ifTHL@thaithm
 \AfterPackage{amsthm}{%
 \IfStrEqCase{\THL@thmcount}{%
 {default}{%
@@ -249,6 +270,6 @@ prefix=THL@
 }%
 \xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}
 }
-
+\fi
 
 \endinput
