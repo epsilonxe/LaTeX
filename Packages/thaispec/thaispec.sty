@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{thaispec}[2018/02/25 version 0.2 thaispec]
+\ProvidesPackage{thaispec}[2018/03/29 version 0.3 thaispec]
 
 \RequirePackage{kvoptions}
 \RequirePackage[no-math]{fontspec}
@@ -151,9 +151,9 @@ prefix=THL@
 
 
 % Thai theorem environments
-
 \ifTHL@thaithm
-\AfterPackage{amsthm}{%
+\@ifpackageloaded{amsthm}
+{%
 \IfStrEqCase{\THL@thmcount}{%
 {default}{%
 \newtheorem{theorem}{ทฤษฎีบท}
@@ -269,7 +269,7 @@ prefix=THL@
 }%
 }%
 \xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}
-}
+}{}
 \fi
 
 \endinput

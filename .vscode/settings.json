@@ -1,0 +1,17 @@
+{
+    "latex-workshop.chktex.enabled": false,
+    "latex-workshop.chktex.path": "chktex",
+    "latex-workshop.latex.autoBuild.onSave.enabled": true,
+    "latex-workshop.latex.clean.enabled": false,
+    "latex-workshop.latex.toolchain": [
+        {
+          "command": "",
+          "args": [
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "%DOC%"
+          ]
+        }
+      ],
+}

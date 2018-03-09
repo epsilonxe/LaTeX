@@ -1,0 +1,36 @@
+#!/bin/bash
+# ctanmake
+# The shell script for preparing a CTAN LaTeX package installer and its requirement
+# Copyright 2018 Ratthaprom Promkam
+# Usage   makectan <type> <name>
+#
+#         type      Type of CTAN package installer which can be either
+#                     package or class.
+#         name      Name of a CTAN package/class in the directories
+#                     Classes or Packages.
+
+ver_num="1.0"
+ver_year=2018
+ver_month=2
+ver_date=26
+version="$ver_num $ver_year-$ver_month-$ver_date"
+
+ctantype=$1
+pkgname=$2
+author="Ratthaprom_Promkam"
+
+echo "This is makectan (version $version)."
+echo "Make $ctantype: $pkgname"
+if [ $ctantype = "package" ]; then
+  cd Packages/$pkgname || exit
+  makedtx -author $author -src "${pkgname}\.sty=>${pkgname}.sty" -doc ${pkgname}.tex $pkgname
+fi
+if [ $ctantype = "class" ]; then
+  cd Classes/$pkgname || exit
+  makedtx -author $author -src "${pkgname}\.cls=>${pkgname}.cls" -doc ${pkgname}.tex $pkgname
+fi
+
+echo "${pkgname}.dtx and ${pkgname}.ins created successfully."
+zip ${pkgname}.zip ${pkgname}.dtx ${pkgname}.ins README.md ${pkgname}.pdf
+rm ${pkgname}.dtx ${pkgname}.ins
+echo "${pkgname}.zip ready to upload to CTAN."

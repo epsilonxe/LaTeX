@@ -156,10 +156,10 @@
 \newenvironment{subobjective}{\begin{enumerate}[label*=.\arabic*,leftmargin=2\parindent]}{\end{enumerate}}
 
 \newcounter{theoremcounter}
-\newenvironment{theorem}[1][]{\stepcounter{theoremcounter}\itshape\vspace{2\parskip}\par\noindent\textbf{ทฤษฎีบท \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
+\newenvironment{theorem}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{ทฤษฎีบท \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
 \newenvironment{definition}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{นิยาม \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
-\newenvironment{lemma}[1][]{\stepcounter{theoremcounter} \itshape\vspace{2\parskip}\par\noindent\textbf{[บทตั้ง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
-\newenvironment{corollary}[1][]{\stepcounter{theoremcounter} \itshape\vspace{2\parskip}\par\noindent\textbf{[บทแทรก \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
+\newenvironment{lemma}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทตั้ง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
+\newenvironment{corollary}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทแทรก \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
 \newenvironment{example}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{ตัวอย่าง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
 
 
