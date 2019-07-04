@@ -11,27 +11,11 @@ Ratthaprom Promkam (ratthaprom@me.com)
 ## Prerequisite
 Thai national fonts, i.e., SIPAFonts (See https://github.com/epsilonxe/sipafonts)
 
-## Recommendation
-Install TeX Gyre font family (Possibly included with your TeX distribution)
-
 ## Usage
-If you already have TeX Gyre font family, just simply add the preamble
+Just simply add the preamble
 ```
 \usepackage{thaispec}
 ```
-Otherwise
-```
-\usepackage[texgyrefont=false]{thaispec}
-```
-This package allows you to input Thai characters directly to ```.tex``` file,
-and choose any Thai fonts to be used in the document.
-In order to choose the font, please make sure that the font is system wide, then use
-```
-\usepackage[thaifont = <SYSTEM THAI FONT NAME>]{thaispec}
-```
-Moreover, the package give you options to choose any system wide fonts for
-`mainfont`, `sansfont` and  `monofont` too
-
 For additional usage or more options, see the documentation.
 
 ## Credits
@@ -40,7 +24,7 @@ provided by Dittaya Wanvarie from Chulalongkorn University.
 (See http://pioneer.netserv.chula.ac.th/~wdittaya/)
 
 ## License
-Copyright 2018 Ratthaprom Promkam
+Copyright Ratthaprom Promkam
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3
