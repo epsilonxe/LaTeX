@@ -1,5 +1,5 @@
 #!/bin/bash
-# ctanmake
+# makectan
 # The shell script for preparing a CTAN LaTeX package installer and its requirement
 # Copyright 2018 Ratthaprom Promkam
 # Usage   makectan <type> <name>

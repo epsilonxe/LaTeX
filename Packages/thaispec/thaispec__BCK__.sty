@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{thaispec}[2019/07/03 version 0.4 thaispec]
+\ProvidesPackage{thaispec}[2018/03/29 version 0.3 thaispec]
 
 \RequirePackage{kvoptions}
 \RequirePackage[no-math]{fontspec}
@@ -16,8 +16,11 @@
 family=THL,
 prefix=THL@
 }
-
 \DeclareStringOption[TH Sarabun New]{thaifont}[TH Sarabun New]
+\DeclareStringOption[TeX Gyre Termes]{mainfont}[TeX Gyre Termes]
+\DeclareStringOption[TeX Gyre Heros]{sansfont}[TeX Gyre Heros]
+\DeclareStringOption[TeX Gyre Cursor]{monofont}[TeX Gyre Cursor]
+
 
 \DeclareVoidOption{math}{%
 \RequirePackage{mathtools}
@@ -25,13 +28,14 @@ prefix=THL@
 \RequirePackage{amsthm}
 \RequirePackage{mathspec}
 }
-
 \DeclareVoidOption{thainum}{\renewcommand{\thesection}{\thainum{section}}}
 
+
+\DeclareBoolOption[true]{texgyrefont}
+\DeclareBoolOption[true]{thaithm}
 \DeclareBoolOption[true]{sloppy}
 \DeclareBoolOption[true]{thaispacing}
 \DeclareBoolOption[true]{thaicaption}
-\DeclareBoolOption[false]{beamerthmcount}
 
 \DeclareStringOption[default]{thmcount}[default]
 
@@ -40,6 +44,7 @@ prefix=THL@
 
 % TeX Commands
 
+\newcommand{\testvar}{\THL@thmcount}
 
 % Set Thai language
 \XeTeXlinebreaklocale "th"
@@ -51,7 +56,14 @@ prefix=THL@
 
 
 % Select Thai fonts
-% \setmainfont[Scale=1.23]{\THL@thaifont}
+\ifTHL@texgyrefont
+\setmainfont{\THL@mainfont}
+\setsansfont{\THL@sansfont}
+\setmonofont{\THL@monofont}
+\else
+\setmainfont[Scale=1.23]{\THL@thaifont}
+\fi
+
 
 % Control English/Thai Fonts
 \newfontfamily{\thaifont}[Scale=MatchUppercase,Mapping=tex-text]{\THL@thaifont}
@@ -68,6 +80,17 @@ prefix=THL@
 \ifTHL@thaicaption
 \AtBeginDocument\captionsthai
 \fi
+
+% In case of Beamer class
+\@ifclassloaded{beamer}
+{}
+{%
+\ifTHL@thaispacing
+\onehalfspacing
+\fi
+}
+
+
 
 
 % Define Thai alpha/number/digit for enumerated items
@@ -127,51 +150,8 @@ prefix=THL@
 }
 
 
-% In beamer
-\@ifclassloaded{beamer}
-{
-\let\theorem\relax
-\let\c@theorem\relax
-\let\lemma\relax
-\let\corollary\relax
-\let\definition\relax
-\let\example\relax
-\let\note\relax
-
-\ifTHL@beamerthmcount
-    \setbeamertemplate{theorems}[numbered]
-\fi
-
-}
-{%
-\ifTHL@thaispacing
-\onehalfspacing
-\fi
-}
-
-% In article class
-\@ifclassloaded{article}
-{
-\renewcommand{\THL@thmcount}{section}
-}
-{}
-
-% In book
-\@ifclassloaded{book}
-{
-\renewcommand{\THL@thmcount}{chapter}
-}
-{}
-
-% In report
-\@ifclassloaded{report}
-{
-\renewcommand{\THL@thmcount}{chapter}
-}
-{}
-
-
 % Thai theorem environments
+\ifTHL@thaithm
 \@ifpackageloaded{amsthm}
 {%
 \IfStrEqCase{\THL@thmcount}{%
@@ -289,8 +269,7 @@ prefix=THL@
 }%
 }%
 \xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}
-}
-{}
-
+}{}
+\fi
 
 \endinput

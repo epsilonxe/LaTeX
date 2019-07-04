@@ -1,7 +1,5 @@
-#!/bin/sh
-texengin=$1
-name=$2
-$texengin -interaction=nonstopmode -output-directory=./.tmp $name
-$texengin -interaction=nonstopmode -output-directory=./.tmp $name
-mkdir -p ./OutputDir/$name
-mv ./.tmp/*.pdf ./OutputDir/$name
+#!/bin/bash
+texname=$1
+texengine=$(grep -E '%\s*!TEX\s*(program|engine)\s*=\s*' ${texname}.tex | sed -E 's:.+= *::')
+$texengine -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=.tmp $texname
+open .tmp/${texname}.pdf
