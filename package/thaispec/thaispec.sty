@@ -1,14 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{thaispec}[2019/07/03 version 0.4 thaispec]
+\ProvidesPackage{thaispec}[version 2021.03.01]
 
 \RequirePackage{kvoptions}
 \RequirePackage[no-math]{fontspec}
 \RequirePackage[Latin, Thai]{ucharclasses}
 \RequirePackage{setspace}
 \RequirePackage{polyglossia}
-\RequirePackage[calc]{datetime2}
+% \RequirePackage[calc]{datetime2}
 \RequirePackage{xstring}
-\RequirePackage{afterpackage}
+% \RequirePackage{afterpackage}
 \RequirePackage{xpatch}
 
 % Key-Value Options
@@ -40,13 +40,17 @@ prefix=THL@
 
 % TeX Commands
 
+\newcommand{\thaispecver}{2021.03.01\;}
+
 
 % Set Thai language
 \XeTeXlinebreaklocale "th"
 \XeTeXlinebreakskip = 0pt plus 0pt
+
 \ifTHL@sloppy
 \sloppy
 \fi
+
 \defaultfontfeatures{Mapping=tex-text}
 
 
@@ -65,8 +69,19 @@ prefix=THL@
 
 \setdefaultlanguage{english}
 \setotherlanguage{thai}
+
 \ifTHL@thaicaption
 \AtBeginDocument\captionsthai
+\addto\captionsenglish{%
+  \renewcommand{\proofname}{พิสูจน์}%
+  \renewcommand{\chaptername}{บทที่}%
+  \renewcommand{\contentsname}{สารบัญ}%
+  \renewcommand{\listfigurename}{สารบัญรูปภาพ}%
+  \renewcommand{\listtablename}{สารบัญตาราง}%
+  \renewcommand{\figurename}{รูปภาพ}%
+  \renewcommand{\tablename}{ตาราง}%
+  \renewcommand{\refname}{เอกสารอ้างอิง}%
+}
 \fi
 
 
@@ -93,38 +108,39 @@ prefix=THL@
 % Define Thai datetime
 % \today - Print today in short format d-M-Y(BD)
 % \Today - Print today in long format dow-d-M-Y(BD)
-\DTMsavenow{now}
-\newcommand{\dtdow}{\IfStrEqCase{\DTMfetchdow{now}}{{0}{วันจันทร์}
-{1}{วันอังคาร}
-{2}{วันพุธ}
-{3}{วันพฤหัสบดี}
-{4}{วันศุกร์}
-{5}{วันเสาร์}
-{6}{วันอาทิตย์}
-}}
 
-\newcommand{\dtmonth}{\IfStrEqCase{\DTMfetchmonth{now}}{{1}{มกราคม}
-{2}{กุมภาพันธ์}
-{3}{มีนาคม}
-{4}{เมษายน}
-{5}{พฤษภาคม}
-{6}{มิถุนายน}
-{7}{กรกฎาคม}
-{8}{สิงหาคม}
-{9}{กันยายน}
-{10}{ตุลาคม}
-{11}{พฤศจิกายน}
-{12}{ธันวาคม}
-}}
+% \DTMsavenow{now}
+% \newcommand{\dtdow}{\IfStrEqCase{\DTMfetchdow{now}}{{0}{วันจันทร์}
+% {1}{วันอังคาร}
+% {2}{วันพุธ}
+% {3}{วันพฤหัสบดี}
+% {4}{วันศุกร์}
+% {5}{วันเสาร์}
+% {6}{วันอาทิตย์}
+% }}
 
-\newcounter{yearbd}
-\setcounter{yearbd}{\DTMfetchyear{now}}
-\addtocounter{yearbd}{543}
-%\newcommand{\dtyearbd}{\FPadd{\tmpdtyearbd}{\DTMfetchyear{now}}{543}\FPclip{\rtmpdtyearbd}{\tmpdtyearbd}พ.ศ.\;\rtmpdtyearbd}
-\AtBeginDocument{
-\def\Today{\dtdow\ \DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
-\def\today{\DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
-}
+% \newcommand{\dtmonth}{\IfStrEqCase{\DTMfetchmonth{now}}{{1}{มกราคม}
+% {2}{กุมภาพันธ์}
+% {3}{มีนาคม}
+% {4}{เมษายน}
+% {5}{พฤษภาคม}
+% {6}{มิถุนายน}
+% {7}{กรกฎาคม}
+% {8}{สิงหาคม}
+% {9}{กันยายน}
+% {10}{ตุลาคม}
+% {11}{พฤศจิกายน}
+% {12}{ธันวาคม}
+% }}
+
+% \newcounter{yearbd}
+% \setcounter{yearbd}{\DTMfetchyear{now}}
+% \addtocounter{yearbd}{543}
+% %\newcommand{\dtyearbd}{\FPadd{\tmpdtyearbd}{\DTMfetchyear{now}}{543}\FPclip{\rtmpdtyearbd}{\tmpdtyearbd}พ.ศ.\;\rtmpdtyearbd}
+% \AtBeginDocument{
+% \def\Today{\dtdow\ \DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
+% \def\today{\DTMfetchday{now}\ \dtmonth\ พ.ศ. \theyearbd}
+% }
 
 
 % In beamer
@@ -182,7 +198,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{บทนิยาม}
-\newtheorem{undefinedterm}[theorem]{อนิยาม}
 \newtheorem{axiom}[theorem]{สัจพจน์}
 \newtheorem{example}[theorem]{ตัวอย่าง}
 \theoremstyle{remark}
@@ -196,7 +211,6 @@ prefix=THL@
 \newtheorem*{proposition}{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem*{definition}{บทนิยาม}
-\newtheorem*{undefinedterm}{อนิยาม}
 \newtheorem*{axiom}{สัจพจน์}
 \newtheorem*{example}{ตัวอย่าง}
 \theoremstyle{remark}
@@ -210,7 +224,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{บทนิยาม}
-\newtheorem{undefinedterm}[theorem]{อนิยาม}
 \newtheorem{axiom}[theorem]{สัจพจน์}
 \newtheorem{example}[theorem]{ตัวอย่าง}
 \theoremstyle{remark}
@@ -224,7 +237,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{บทนิยาม}
-\newtheorem{undefinedterm}[theorem]{อนิยาม}
 \newtheorem{axiom}[theorem]{สัจพจน์}
 \newtheorem{example}[theorem]{ตัวอย่าง}
 \theoremstyle{remark}
@@ -238,7 +250,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{บทนิยาม}
-\newtheorem{undefinedterm}[theorem]{อนิยาม}
 \newtheorem{axiom}[theorem]{สัจพจน์}
 \newtheorem{example}[theorem]{ตัวอย่าง}
 \theoremstyle{remark}
@@ -252,7 +263,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}{บทนิยาม}
-\newtheorem{undefinedterm}[definition]{อนิยาม}
 \newtheorem{axiom}[definition]{สัจพจน์}
 \newtheorem{example}{ตัวอย่าง}
 \theoremstyle{remark}
@@ -266,7 +276,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}{บทนิยาม}[section]
-\newtheorem{undefinedterm}[definition]{อนิยาม}
 \newtheorem{axiom}[definition]{สัจพจน์}
 \newtheorem{example}{ตัวอย่าง}
 \theoremstyle{remark}
@@ -280,7 +289,6 @@ prefix=THL@
 \newtheorem{proposition}[theorem]{ทฤษฎีบทประกอบ}
 \theoremstyle{definition}
 \newtheorem{definition}{บทนิยาม}[chapter]
-\newtheorem{undefinedterm}[definition]{อนิยาม}
 \newtheorem{axiom}[definition]{สัจพจน์}
 \newtheorem{example}{ตัวอย่าง}
 \theoremstyle{remark}
@@ -294,3 +302,7 @@ prefix=THL@
 
 
 \endinput
+
+
+
+% EOF ----------------------------

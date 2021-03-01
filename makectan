@@ -9,11 +9,7 @@
 #         name      Name of a CTAN package/class in the directories
 #                     Classes or Packages.
 
-ver_num="1.0"
-ver_year=2018
-ver_month=2
-ver_date=26
-version="$ver_num $ver_year-$ver_month-$ver_date"
+version="2021.03.01"
 
 ctantype=$1
 pkgname=$2
@@ -22,15 +18,15 @@ author="Ratthaprom_Promkam"
 echo "This is makectan (version $version)."
 echo "Make $ctantype: $pkgname"
 if [ $ctantype = "package" ]; then
-  cd Packages/$pkgname || exit
+  cd package/$pkgname || exit
   makedtx -author $author -src "${pkgname}\.sty=>${pkgname}.sty" -doc ${pkgname}.tex $pkgname
 fi
 if [ $ctantype = "class" ]; then
-  cd Classes/$pkgname || exit
+  cd class/$pkgname || exit
   makedtx -author $author -src "${pkgname}\.cls=>${pkgname}.cls" -doc ${pkgname}.tex $pkgname
 fi
 
 echo "${pkgname}.dtx and ${pkgname}.ins created successfully."
 zip ${pkgname}.zip ${pkgname}.dtx ${pkgname}.ins README.md ${pkgname}.pdf
 rm ${pkgname}.dtx ${pkgname}.ins
-echo "${pkgname}.zip ready to upload to CTAN."
+echo "./${ctantype}/${pkgname}/${pkgname}.zip ready to upload to CTAN."

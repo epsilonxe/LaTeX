@@ -48,7 +48,7 @@ autogobble=true,
 
 \title{The \pkgname\ package: \\Thai language typesetting in \XeLaTeX}
 \author{Ratthaprom Promkam\\{\texttt{\small ratthaprom@me.com}}}
-\date{Version 0.4 from July 4, 2019}
+\date{Version 2021.03.01}
 
 \begin{document}
 \maketitle
@@ -61,20 +61,28 @@ It also tries to appropriately justify paragraphs with no more external tools.
 
 
 \section{Prerequisite}
-The package use \texttt{TH Sarabun New} font by default to typeset Thai characters
-which included in the collection of Thai national fonts
-\footnote{Thai national fonts, a.k.a. \texttt{SIPAFonts}.
-See \url{https://github.com/epsilonxe/sipafonts}}.
-At least this font must be installed to system wide in order to use this package.
-Moreover the following \LaTeX\ package are essentially required for the default option: \texttt{fontspec}, \texttt{uchar­classes}, \texttt{poly­glos­sia}, \texttt{setspace}, \texttt{date­time2}, \texttt{kvop­tions}, \texttt{after­pack­age}, \texttt{xstring}, and \texttt{xpatch}.
+The package requires \texttt{TH Sarabun New} \footnote{Thai national fonts, a.k.a. \texttt{SIPAFonts}.
+See \url{https://github.com/epsilonxe/sipafonts}}, included in the collection of Thai national fonts, by default to typeset Thai characters.
+The following \LaTeX\ package are essentially required for the default option: \texttt{fontspec}, \texttt{uchar­classes}, \texttt{poly­glos­sia}, \texttt{setspace}, \texttt{kvop­tions}, and \texttt{xpatch}.
 
 \section{Installation}
-The \texttt{thaispec} packages are included in all major \LaTeX distributions.
-In case it is not installed, please visit \url{https://github.com/epsilonxe/latex}} to download the latest version of \texttt{thaispec.sty} and put it in your working directory.
+Although the \texttt{thaispec} packages are included in all major \LaTeX\ distributions, you may need to manually install or upgrade to the latest version.
+ 
+In a case that it is neither installed nor outdated, please visit \url{https://github.com/epsilonxe/latex} to download the latest version of \texttt{thaispec.sty} and put it in your working directory.
+
+More conveniently, but require familiar to command line interface, 
+please run the following commands to install or update to the most recent version of \texttt{thaipsec} via TexLive Manager. 
+However, you may need administrator right to launch these commands.
+So consider to add \texttt{sudo} before each of the following commands.
+
+\begin{minted}{bash}
+$tlmgr install thaispec 
+$tlmgr update thaispec    
+\end{minted}
 
 \section{Recommendation}
-Install the collection of Thai national font said above.
-Python and \textt{pygments} are also recommended to be installed to typeset Thai documents which some syntax highlighted codes are needed.
+Install the collection of Thai national fonts said above.
+Python and \texttt{pygments} are also recommended to be installed if syntax highlight needed in the document.
 
 \section{Package loading}
 In the preamble, add the command
@@ -265,7 +273,7 @@ highlightlines={2-5}
 
 
 \section{Known Issues}
-\subsection*{Incorrect Thai characters with \texttt{listing} package}
+\subsection{Incorrect Thai characters with \texttt{listing} package}
 If you typeset some codes consisting of Thai characters in \texttt{lstlisting} environment provided by \texttt{listing} package, this will possibly cause you a problem with incorrect Thai characters.
 The recommendation is choosing \texttt{minted} package instead of \texttt{listing} package.
 However you need to additionally install \texttt{pygments} python module in order to use \texttt{minted} package.
@@ -279,6 +287,16 @@ For example, use
 $ xelatex -shell-escape your-tex-file.tex
 \end{minted}
 to typeset your tex file.
+
+\subsection{TexPad in macOS}
+As said above, the shell-escape must be enabled.
+Additionally, the \emph{Hide Intermediate Files} option must be disable and copy the pygment launcher to \texttt{/usr/local/bin}.
+The launcher can be located with the command
+\begin{minted}[frame=single]{shell}
+$ which pygments
+\end{minted}
+Instead of copying the launcher directly, one may put its symbolic link to \texttt{/usr/local/bin}.
+If there is an error due to \texttt{minted} package, we recommend to delete the minted output directory prior typesetting.
 
 \section{Credits}
 This package is motivated by a set of \LaTeX\ commands for typesetting Thai documents

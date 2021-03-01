@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{\PYGZbs{}documentclass}\PYG{n+nb}{\PYGZob{}}article\PYG{n+nb}{\PYGZcb{}}
+\PYG{k}{\PYGZbs{}usepackage}\PYG{n+na}{[math, thaifont = Tahoma, sloppy = false]}\PYG{n+nb}{\PYGZob{}}thaispec\PYG{n+nb}{\PYGZcb{}}
+\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}document\PYG{n+nb}{\PYGZcb{}}
+\PYG{k}{\PYGZbs{}section}\PYG{n+nb}{\PYGZob{}}Math ภาษาไทย\PYG{n+nb}{\PYGZcb{}}
+การพิมพ์ภาษาไทยในเอกสาร \PYG{l+s}{\PYGZdl{}}\PYG{n+nb}{ax\PYGZca{}}\PYG{l+m}{2}\PYG{o}{+}\PYG{n+nb}{bx}\PYG{o}{+}\PYG{n+nb}{c}\PYG{o}{=}\PYG{l+m}{0}\PYG{l+s}{\PYGZdl{}}
+\PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}document\PYG{n+nb}{\PYGZcb{}}
+\end{Verbatim}
