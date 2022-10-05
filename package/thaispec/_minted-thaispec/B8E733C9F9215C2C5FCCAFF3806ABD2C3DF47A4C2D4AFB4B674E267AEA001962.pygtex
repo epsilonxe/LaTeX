@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k}{\PYGZbs{}documentclass}\PYG{n+nb}{\PYGZob{}}article\PYG{n+nb}{\PYGZcb{}}
-\PYG{k}{\PYGZbs{}usepackage}\PYG{n+nb}{\PYGZob{}}thaispec\PYG{n+nb}{\PYGZcb{}}
-\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}document\PYG{n+nb}{\PYGZcb{}}
-\PYG{k}{\PYGZbs{}section}\PYG{n+nb}{\PYGZob{}}ภาษาไทย\PYG{n+nb}{\PYGZcb{}}
-ทดสอบการพิมพ์ภาษาไทยในเอกสาร \PYG{k}{\PYGZbs{}XeLaTeX}
-\PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}document\PYG{n+nb}{\PYGZcb{}}
-\end{Verbatim}

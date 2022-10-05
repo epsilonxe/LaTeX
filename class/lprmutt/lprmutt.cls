@@ -2,7 +2,7 @@
 \ProvidesClass{lprmutt}[2018/02/25 LP RMUTT]
 
 
-\LoadClass[twoside]{book}
+\LoadClass[twoside,12pt,a4paper]{book}
 
 \def\subjecttitlethai#1{\def\@subjecttitlethai{#1}}
 \def\subjecttitleenglish#1{\def\@subjecttitleenglish{#1}}
@@ -20,11 +20,38 @@
 \newcommand{\printdate}{\@date}
 \newcommand{\printprerequisite}{\@prerequisite}
 
+\newcommand{\makecover}{
+\cleardoublepage
+\thispagestyle{empty}
+\begin{center}
+\includegraphics[height=5.8cm]{rmuttlogo}
+\par\vspace{1cm}
+\Large{เอกสารประกอบการสอน}
+\par
+\Large{รายวิชา \printsubjecttitlethai\ (\printsubjecttitleenglish)}
+\par
+\Large{(\printsubjectid)}
+\par\vspace{3cm}
+\Large{โดย}
+\par
+\Large{\printauthor}
+\par\vspace{3cm}
+\Large{ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์}
+\par
+\Large{คณะวิทยาศาสตร์และเทคโนโลยี}
+\par
+\Large{มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}
+\par
+\Large{\@date}
+\end{center}
+\cleardoublepage
+}
+
 \newcounter{unitclass}
 \newcounter{starttopic}
 
 \RequirePackage[a4paper,left=2.6cm,right=2.4cm,top=2.54cm,bottom=2.54cm]{geometry}
-\RequirePackage[math,thaithm=false]{thaispec}
+\RequirePackage[math]{thaispec}
 
 \RequirePackage{emptypage}
 \RequirePackage{fancyhdr}
@@ -156,11 +183,11 @@
 \newenvironment{subobjective}{\begin{enumerate}[label*=.\arabic*,leftmargin=2\parindent]}{\end{enumerate}}
 
 \newcounter{theoremcounter}
-\newenvironment{theorem}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{ทฤษฎีบท \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
-\newenvironment{definition}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{นิยาม \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
-\newenvironment{lemma}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทตั้ง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
-\newenvironment{corollary}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทแทรก \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
-\newenvironment{example}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{ตัวอย่าง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
+\renewenvironment{theorem}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{ทฤษฎีบท \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
+\renewenvironment{definition}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{นิยาม \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
+\renewenvironment{lemma}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทตั้ง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
+\renewenvironment{corollary}[1][]{\stepcounter{theoremcounter}\vspace{2\parskip}\par\noindent\textbf{[บทแทรก \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}\itshape}{\par\vspace{2\parskip}}
+\renewenvironment{example}[1][]{\stepcounter{theoremcounter} \vspace{2\parskip}\par\noindent\textbf{ตัวอย่าง \theunitclass.\thetopiccounter.\thetheoremcounter\hspace{2ex}}\ifthenelse{\equal{#1}{}}{}{(#1)}}{\par\vspace{2\parskip}}
 
 
 \renewenvironment{proof}{\vspace{-2\parskip}\par\noindent\textbf{พิสูจน์}\hspace{4ex}}{\par\hfill\rule{0.6em}{0.6em}\par\vspace{2\parskip}}
@@ -216,7 +243,7 @@
 {
 \cleardoublepage
 \addtocline{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์  ของมหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}
-{\centering\Large\textbf{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์ \\ ของมหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}\vspace{3\parskip}\par}
+{\centering\large\textbf{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์ \\ ของมหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}\vspace{3\parskip}\par}
 
 \noindent\large\textbf{ปรัชญา (Philosophy)}\par\normalsize
 มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี มุ่งเน้นการพัฒนากำลังคนด้านวิทยาศาสตร์และเทคโนโลยี ให้มีทักษะความชำนาญด้านวิชาชีพ เสริมสร้างทุนมนุษย์ที่มีมูลค่าเพิ่มให้กับประเทศไทยและภูมิภาค\localvspace
@@ -249,7 +276,7 @@
 {
 \cleardoublepage
 \addtocline{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์  ของคณะวิทยาศาสตร์และเทคโนโลยี}
-{\centering\Large\textbf{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์ \\ ของคณะวิทยาศาสตร์และเทคโนโลยี}\vspace{3\parskip}\par}
+{\centering\large\textbf{ปรัชญา ปณิธาน วิสัยทัศน์ พันธกิจ อัตลักษณ์ และเอกลักษณ์ \\ ของคณะวิทยาศาสตร์และเทคโนโลยี}\vspace{3\parskip}\par}
 
 \noindent\large\textbf{ปรัชญา (Philosophy)}\par\normalsize
 คณะวิทยาศาสตร์และเทคโนโลยี มุ่งเน้นการพัฒนากำลังคนด้านวิทยาศาสตร์และเทคโนโลยีให้มีทักษะและความชำนาญด้านวิชาชีพ  เสริมสร้างทุนมนุษย์ที่มีมูลค่าเพิ่มให้กับประเทศไทยและภูมิภาค
@@ -284,14 +311,14 @@
 {
 \cleardoublepage
 \addtocline{วัตถุประสงค์ของหลักสูตร}
-{\centering\Large\textbf{วัตถุประสงค์ของหลักสูตร}\vspace{3\parskip}\par\large\textbf{หลักสูตรระดับ ปริญญาตรี}\vspace{3\parskip}
+{\centering\large\textbf{วัตถุประสงค์ของหลักสูตร}\vspace{3\parskip}\par\large\textbf{หลักสูตรระดับ ปริญญาตรี}\vspace{3\parskip}
 \par}
 \normalsize
 \begin{enumerate}
-	\item เพื่อให้ความรู้พื้นฐานอันจำเป็น (essential knowledge) แก่นักศึกษาทุกคน สำหรับการเป็นพลเมืองดี
+	\item เพื่อให้ความรู้พื้นฐานอันจำเป็น (Essential knowledge) แก่นักศึกษาทุกคน สำหรับการเป็นพลเมืองดี
 	\item เพื่อเพิ่มพูนความเจริญงอกงามทางสติปัญญา (Intellectual skill) อันจะช่วยให้นักศึกษาสามารถนำความรู้ไปใช้ในการแก้ปัญหาชีวิต และช่วยจรรโลงสังคมให้เจริญรุ่งเรือง
 	\item เพื่อช่วยพัฒนาลักษณะและอุปนิสัย ทัศนคติ และอุดมคติให้สมกับเป็นบัณฑิต
-	\item เพื่อเป็นส่วนประกอบในความพร้อมของการศึกษาทุกแขนงวิชาชีพ และเตรียมการให้นักศึกษาได้มีโอกาสเรียนวิชาวิทยาศาสตร์จนถึงระดับเชี่ยวชาญเฉพาะทาง (specialization)
+	\item เพื่อเป็นส่วนประกอบในความพร้อมของการศึกษาทุกแขนงวิชาชีพ และเตรียมการให้นักศึกษาได้มีโอกาสเรียนวิชาวิทยาศาสตร์จนถึงระดับเชี่ยวชาญเฉพาะทาง (Specialization)
 \end{enumerate}
 
 }
@@ -484,32 +511,6 @@
 {\end{enumerate}}
 
 
-\newcommand{\showcover}{
-\cleardoublepage
-\thispagestyle{empty}
-\begin{center}
-\includegraphics[height=5.8cm]{rmuttlogo}
-\par\vspace{1cm}
-\huge{เอกสารประกอบการสอน}
-\par
-\huge{รายวิชา \printsubjecttitlethai\ (\printsubjecttitleenglish)}
-\par
-\huge{(\printsubjectid)}
-\par\vspace{3cm}
-\huge{โดย}
-\par
-\huge{\printauthor}
-\par\vspace{3cm}
-\huge{ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์}
-\par
-\huge{คณะวิทยาศาสตร์และเทคโนโลยี}
-\par
-\huge{มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี}
-\par
-\huge{\theyearbd}
-\end{center}
-\cleardoublepage
-}
 
 \renewcommand{\appendix}{
 \cleardoublepage
@@ -521,3 +522,6 @@
 \setcounter{figure}{0}
 \setcounter{table}{0}
 }
+
+
+

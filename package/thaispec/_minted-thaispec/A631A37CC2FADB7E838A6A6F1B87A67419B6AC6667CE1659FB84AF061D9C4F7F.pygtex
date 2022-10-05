@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nv}{\PYGZdl{}tlmgr} install thaispec
-\PYG{n+nv}{\PYGZdl{}tlmgr} update thaispec
-\end{Verbatim}
