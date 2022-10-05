@@ -4,6 +4,8 @@
 #----------------------------------------
 # Ignore macOS files
 .DS_Store
+.tmp
+.vscode
 #----------------------------------------
 # Ignore Output Directory
 OutputDir/*
